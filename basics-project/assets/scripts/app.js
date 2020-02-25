@@ -43,7 +43,7 @@ function oduzmi () {
   const enteredNumber= getUserNumberInput();
   pocetnaVrijednost = currentResult;
   calcDescription = `${currentResult} - ${enteredNumber}`;
-  currentResult = currentResult - enteredNumber;
+  currentResult -= enteredNumber;
   outputResult(currentResult,calcDescription);
   writeToLog('SUBSTRACT', pocetnaVrijednost, enteredNumber,currentResult)
 }
