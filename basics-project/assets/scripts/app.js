@@ -14,7 +14,7 @@ Komentar za više linija
 
 
 function getUserNumberInput() {
-  return parseInt(userInput.value);
+  return userInput.value;
 }
 
 function writeToLog(operacija, prjasnjiRezultat, dodaniBroj, rezultat){
@@ -71,3 +71,4 @@ addBtn.addEventListener('click', addNumber);
 subtractBtn.addEventListener('click', oduzmi);
 multiplyBtn.addEventListener('click', umnozak);
 divideBtn.addEventListener('click', podjeli);
+
