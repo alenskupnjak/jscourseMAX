@@ -4,17 +4,9 @@ const rezultat = 0;
 
 let logEntries = [];
 
-//   prvi način komentara
-
-/*
-
-Komentar za više linija
-
-*/
-
 
 function getUserNumberInput() {
-  return userInput.value;
+  return  parseInt(userInput.value);
 }
 
 function writeToLog(operacija, prjasnjiRezultat, dodaniBroj, rezultat){
@@ -26,44 +18,77 @@ function writeToLog(operacija, prjasnjiRezultat, dodaniBroj, rezultat){
   };
   logEntries.push(logUlaz);
   console.log(logEntries)
-
 }
 
+function ispisiRezultat(mathOperator, pocetnaVrijednost, enteredNumber) {
+  calcDescription = `${pocetnaVrijednost} ${mathOperator} ${enteredNumber}`;
+  outputResult(currentResult,calcDescription);
+}
+
+function calculateResult(calculationType) {
+  const enteredNumber= getUserNumberInput()
+  const pocetnaVrijednost = currentResult
+  let mathOperator;
+  // calcDescription = `${currentResult} + ${enteredNumber}`;
+  // outputResult(currentResult,calcDescription);
+
+  if (calculationType === 'DODAJ') {
+    currentResult += enteredNumber;
+    mathOperator = '+'
+  } else if (calculationType === 'ODUZMI') {
+    currentResult -= enteredNumber;
+    mathOperator = '-'
+  } else if (calculationType === 'MNOZI') {
+    currentResult *= enteredNumber;
+    mathOperator = '*'
+  } else if (calculationType === 'DIJELI') {
+    currentResult /= enteredNumber;
+    mathOperator = '/'
+  }
+
+  ispisiRezultat (mathOperator, pocetnaVrijednost, enteredNumber);
+  writeToLog(calculationType, pocetnaVrijednost, enteredNumber, currentResult)
+}
 
 function addNumber () {
-  const enteredNumber= getUserNumberInput()
-  pocetnaVrijednost = currentResult
-  calcDescription = `${currentResult} + ${enteredNumber}`;
-  currentResult = currentResult + enteredNumber;
-  outputResult(currentResult,calcDescription);
-  writeToLog('ADD', pocetnaVrijednost, enteredNumber, currentResult)
+  calculateResult('DODAJ');
+  // const enteredNumber= getUserNumberInput()
+  // pocetnaVrijednost = currentResult
+  // calcDescription = `${currentResult} + ${enteredNumber}`;
+  // currentResult = currentResult + enteredNumber;
+  // // outputResult(currentResult,calcDescription);
+  // ispisiRezultat (mathOperator, pocetnaVrijednost, enteredNumber);
+  // writeToLog('ADD', pocetnaVrijednost, enteredNumber, currentResult)
 }
 
 function oduzmi () {
-  const enteredNumber= getUserNumberInput();
-  pocetnaVrijednost = currentResult;
-  calcDescription = `${currentResult} - ${enteredNumber}`;
-  currentResult -= enteredNumber;
-  outputResult(currentResult,calcDescription);
-  writeToLog('SUBSTRACT', pocetnaVrijednost, enteredNumber,currentResult)
+  calculateResult('ODUZMI');
+  // const enteredNumber= getUserNumberInput();
+  // pocetnaVrijednost = currentResult;
+  // calcDescription = `${currentResult} - ${enteredNumber}`;
+  // currentResult -= enteredNumber;
+  // outputResult(currentResult,calcDescription);
+  // writeToLog('SUBSTRACT', pocetnaVrijednost, enteredNumber,currentResult)
 }
 
 function umnozak() {
-  const enteredNumber= getUserNumberInput();
-  pocetnaVrijednost = currentResult;
-  calcDescription = `${currentResult} * ${enteredNumber}`;
-  currentResult =  currentResult * enteredNumber;
-  outputResult(currentResult,calcDescription);
-  writeToLog('MULTI', pocetnaVrijednost, enteredNumber,currentResult)
+  calculateResult('MNOZI');
+  // const enteredNumber= getUserNumberInput();
+  // pocetnaVrijednost = currentResult;
+  // calcDescription = `${currentResult} * ${enteredNumber}`;
+  // currentResult =  currentResult * enteredNumber;
+  // outputResult(currentResult,calcDescription);
+  // writeToLog('MNOZI', pocetnaVrijednost, enteredNumber,currentResult)
 }
 
 function podjeli (){
-  const enteredNumber= getUserNumberInput()
-  pocetnaVrijednost = currentResult;
-  calcDescription = `${currentResult} / ${enteredNumber}`;
-  currentResult =   currentResult / enteredNumber;
-  outputResult(currentResult,calcDescription);
-  writeToLog('DIVIDE', pocetnaVrijednost, enteredNumber,currentResult)
+  calculateResult('DIJELI');
+  // const enteredNumber= getUserNumberInput()
+  // pocetnaVrijednost = currentResult;
+  // calcDescription = `${currentResult} / ${enteredNumber}`;
+  // currentResult =   currentResult / enteredNumber;
+  // outputResult(currentResult,calcDescription);
+  // writeToLog('DIJELI', pocetnaVrijednost, enteredNumber,currentResult)
 }
 
 
