@@ -27,6 +27,9 @@ function ispisiRezultat(mathOperator, pocetnaVrijednost, enteredNumber) {
 
 function calculateResult(calculationType) {
   const enteredNumber= getUserNumberInput()
+  if (enteredNumber == 0 ) {
+    return;
+  }
   const pocetnaVrijednost = currentResult
   let mathOperator;
   // calcDescription = `${currentResult} + ${enteredNumber}`;
