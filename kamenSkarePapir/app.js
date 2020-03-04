@@ -1,56 +1,114 @@
 const startGameBtn = document.getElementById('start-game-btn');
 
-let vrijednostPC
-let vrijednostCovjek
-let rezultatIgre
+const ROCK = 'ROCK';
+const PAPER = 'PAPER';
+const SCISSORS = 'SCISSORS';
+const DEFAULT_USER_CHOICE = ROCK;
+const RESULT_DRAW = 'DRAW';
+const RESULT_PLAYER_WINS = 'PLAYER_WINS';
+const RESULT_COMPUTER_WINS = 'COMPUTER_WINS';
 
+let gameIsRunning = false;
 
-const getPC = () => {
-  let PC = Math.random();
-  if ( PC < 0.34)  {
-    return 'KAMEN';
-    } else if ( PC < 0.67) {
-    return 'SKARE';
-    } else {
-    return'PAPIR';
-   }
+const getPlayerChoice = () => {
+  const selection = prompt(
+    `${ROCK}, ${PAPER} or ${SCISSORS}?`,
+    ''
+  ).toUpperCase();
+  if (selection !== ROCK && selection !== PAPER && selection !== SCISSORS) {
+    alert(`Invalid choice! We chose ${DEFAULT_USER_CHOICE} for you!`);
+    return;
+  }
+  return selection;
+};
+
+const getComputerChoice = () => {
+  const randomValue = Math.random();
+  if (randomValue < 0.34) {
+    return ROCK;
+  } else if (randomValue < 0.67) {
+    return PAPER;
+  } else {
+    return SCISSORS;
+  }
+};
+
+const getWinner = (cChoice, pChoice = DEFAULT_USER_CHOICE) => {
+  // cChoice === pChoice
+  //   ? RESULT_DRAW
+  //   : (cChoice === ROCK && pChoice === PAPER) ||
+  //     (cChoice === PAPER && pChoice === SCISSORS) ||
+  //     (cChoice === SCISSORS && pChoice === ROCK)
+  //   ? RESULT_PLAYER_WINS
+  //   : RESULT_COMPUTER_WINS;
+
+  if (cChoice === pChoice) {
+  return RESULT_DRAW;
+    } else if (
+          (cChoice === ROCK && pChoice === PAPER) ||
+          (cChoice === PAPER && pChoice === SCISSORS) ||
+          (cChoice === SCISSORS && pChoice === ROCK)
+  ) {
+    return RESULT_PLAYER_WINS;
+  } else {
+    return RESULT_COMPUTER_WINS;
+  }
 }
 
-const getCovjek = ()=> {
-  const covjek = prompt('Odabri izmedu Skare, kamena i papira','').toUpperCase();
- if ( covjek !== 'KAMEN' &&
-      covjek !== 'SKARE' &&
-      covjek !== 'PAPIR') {
-        return 'KAMEN';
-    } else {
-      return covjek;
-    }
+startGameBtn.addEventListener('click', () => {
+  if (gameIsRunning) {
+    return;
+  }
+  gameIsRunning = true;
+  console.log('Game is starting...');
+  const playerChoice = getPlayerChoice();
+  const computerChoice = getComputerChoice();
+  let winner
+  if (playerChoice) {
+    winner = getWinner(computerChoice, playerChoice);
+  } else {
+    winner = getWinner(computerChoice);
+  }
+  let message = `You picked ${playerChoice || DEFAULT_USER_CHOICE}, computer picked ${computerChoice}, therefore you `;
+  if (winner === RESULT_DRAW) {
+    message = message + 'had a draw.';
+  } else if (winner === RESULT_PLAYER_WINS) {
+    message = message + 'won.';
+  } else {
+    message = message + 'lost.';
+  }
+  alert(message);
+  gameIsRunning = false;
+});
+
+
+
+// not related to game
+const sumUp = (...numbers) => {
+
+  const validateNumber = (number) => {
+   return isNaN(number)? 0 : number;
+  }
+  let sum = 0;
+  for (const num of numbers) {
+    sum += validateNumber(num);
+  }
+  return sum;
+};
+
+const oduzimanje = function (resultHandler) {
+  let sum = 0;
+  for (const i of arguments) {
+    sum = sum - i
+  }
+  resultHandler(sum);
 }
 
-const rezultat = (PC, covjek) => {
-  if (PC  == covjek) {
-    return 'Neriješeno'
-} else if ( PC  == 'KAMEN' && covjek == 'SKARE' || 
-            PC  == 'SKARE' && covjek == 'PAPIR' ||
-            PC  == 'PAPIR' && covjek == 'KAMEN') 
-{       return 'Pobjeda PC'
-} else {
-        return 'Pobjeda Covjek'
-}
+
+const showResult = result => {
+ alert('Razult je nakon prolaska kroz funkciju = ' + result)
 }
 
-const start = () => {
-
- const izborPC = getPC();
- const izborCovjek = getCovjek();
- const rez = rezultat(izborPC, izborCovjek);
-
- let poruke =` Ti si odabrao ${izborCovjek}, PC je odabrao ${izborPC}, stoga je rezultat igre: ${rez}`;
-
- alert(poruke);
-
-
-}
-
-
-startGameBtn.addEventListener('click', start);
+console.log(sumUp(1, 5, 'jje', -3, 6, 10));
+console.log(sumUp(1, 5, 10, -3, 6, 10, 25, 88));
+oduzimanje(showResult,1, 10, 15, 20);
