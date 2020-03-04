@@ -228,9 +228,21 @@ function printLogHandler() {
     console.log(battleLog[i]);
   }
 
+  // petlja kroz polje
   for (const log of battleLog) {
     console.log(log);
   }
+  
+  console.log('petlja u petlji');
+
+    for (const data of battleLog) {
+      console.log(data);
+      for (const key in data) {
+        console.log(key + ' = '+ data[key]);
+      }
+    }
+
+
 }
 
 attackBtn.addEventListener('click',attackHandler);
