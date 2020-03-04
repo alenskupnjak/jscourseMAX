@@ -216,7 +216,6 @@ function healPlayerHandler () {
     currentMonsterHealth,
     currentPlayerHealth
   );
-  console.log(currentPlayerHealth);
   endRound()
 }
 
@@ -224,7 +223,14 @@ function printLogHandler() {
   for (let i = 0; i < battleLog.length; i++) {
     console.log('------');
   }
-  console.log(battleLog);
+
+  for (let i = 0; i < battleLog.length; i++) {
+    console.log(battleLog[i]);
+  }
+
+  for (const log of battleLog) {
+    console.log(log);
+  }
 }
 
 attackBtn.addEventListener('click',attackHandler);
