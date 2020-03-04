@@ -6,9 +6,16 @@ let choosenMaxLife = 100;
 
 let currentMonsterHealth = choosenMaxLife;
 let currentPlayerHealth = choosenMaxLife;
+let hasBonusLive = true;
 
 
 adjustHealthBars(choosenMaxLife);
+
+function reset() {
+  currentMonsterHealth = choosenMaxLife;
+  currentPlayerHealth = choosenMaxLife;
+  resetGame(choosenMaxLife);
+}
 
 function attackHandler() {
  checkWinner(ATTACK_VALUE);
@@ -25,14 +32,27 @@ function checkWinner (attack) {
 }
 
 function endRound() {
+  const initialPlayerHealth = currentPlayerHealth;
   const playerDamage = dealPlayerDamage(MONSTER_ATTACK_VALUE);
   currentPlayerHealth = currentPlayerHealth - playerDamage
+
+ if (currentPlayerHealth <= 0 && hasBonusLive) {
+   hasBonusLive = false;
+   removeBonusLife();
+   currentPlayerHealth = initialPlayerHealth;
+   alert('Dobio novi zivot');
+   setPlayerHealth(initialPlayerHealth);
+  }
+
   if (currentMonsterHealth <= 0 && currentPlayerHealth > 0 ) {
-    alert('You Won!')
+    alert('You Won!');
+    reset();
   } else if (currentPlayerHealth <=0 && currentMonsterHealth > 0) {
     alert('You lost');
+    reset();
   } else if (currentPlayerHealth <= 0 && currentMonsterHealth <= 0) {
    alert('Nerjeseno');
+    reset();
   }
 }
 
