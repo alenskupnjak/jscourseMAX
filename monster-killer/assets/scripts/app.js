@@ -2,11 +2,17 @@ const ATTACK_VALUE = 10
 const MONSTER_ATTACK_VALUE = 14 
 const STRONG_ATTACK_VALUE = 17
 const HEAL_VALUE = 20
-let choosenMaxLife = 100;
+const enteredValue = parseInt(prompt('Maksimalni broj života', 100)) ;
 
+let choosenMaxLife = enteredValue ;
+
+if (isNaN(choosenMaxLife) || choosenMaxLife <= 0) {
+  choosenMaxLife = 100;
+}
 let currentMonsterHealth = choosenMaxLife;
 let currentPlayerHealth = choosenMaxLife;
 let hasBonusLive = true;
+let battleLog = [];
 
 
 adjustHealthBars(choosenMaxLife);
