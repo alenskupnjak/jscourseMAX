@@ -241,7 +241,11 @@ function printLogHandler() {
         console.log(key + ' = '+ data[key]);
       }
     }
-
+    let j= 0 ;
+    while ( j < 3) {
+      console.log('--while -');
+      j++
+    }
 
 }
 
