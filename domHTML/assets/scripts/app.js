@@ -57,8 +57,6 @@ const deleteMovie = (movieId) => {
   }
 }
 
-
-
 const deleteMovieHandler = (movieId) => {
   indexBrisi = movieId
   deleteDialog.classList.add('visible')
