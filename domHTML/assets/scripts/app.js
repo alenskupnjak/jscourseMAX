@@ -1,4 +1,3 @@
-
 let addMovieModal = document.querySelector('#add-modal') // prvi moguci nacin za CSS klasu obavezno treba dodati hash # !!!!!
 console.log(addMovieModal)
 addMovieModal = document.body.children[1]  // drugi moguci nacin!!!!!
@@ -38,7 +37,6 @@ const updateUI = () => {
   } else {
     entryTeyxtSection.style.display = 'none'
   }
-
 }
 
 
@@ -52,10 +50,11 @@ const deleteMovie = (movieId) => {
     movieIndex ++;
   }
   moviesData.splice(movieIndex,1);
-  console.log('xxxxx')
-  console.log(moviesData)
   const listRoot = document.getElementById('movie-list');
   listRoot.children[movieIndex].remove();
+  if (moviesData.length === 0) {
+    entryTeyxtSection.style.display = 'block'
+  }
 }
 
 
@@ -63,7 +62,7 @@ const deleteMovie = (movieId) => {
 const deleteMovieHandler = (movieId) => {
   indexBrisi = movieId
   deleteDialog.classList.add('visible')
- updateUI();
+  updateUI();
 }
 
 const cancelDialogeDelete = () => {
@@ -113,14 +112,9 @@ const cancelAddMovie = () => {
 }
 
 const claerUserInputs = () => {
-  userInput[0].value = '';
-  userInput[1].value = '';
-  userInput[2].value = '';
-// drugo rijesenje
  for (const data of userInput) {
    data.value = ''
  }
-
 }
 
 const backdropClickHandler = () => {
@@ -151,7 +145,6 @@ const addMovieHandler = ()=> {
   updateUI();
   renderNewMovieElement(newMovie.id, newMovie.title, newMovie.image, newMovie.rating);
 }
-
 
 
 startAddMovieButton.addEventListener('click', toggleMovieModal);
