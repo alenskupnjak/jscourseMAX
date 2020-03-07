@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Favorite Movies</title>
+    <title>Filmovi</title>
     <link rel="stylesheet" href="assets/styles/app.css" />
     <script src="assets/scripts/app.js" defer></script>
   </head>
@@ -31,6 +31,8 @@
         <button class="btn btn--success">Add</button>
       </div>
     </div>
+
+
     <div class="modal" id="delete-modal">
       <h2 class="modal__title">Are you sure?</h2>
       <p class="modal__content">
@@ -38,10 +40,11 @@
         undone!
       </p>
       <div class="modal__actions">
-        <button class="btn btn--passive">No (Cancel)</button>
-        <button class="btn btn--danger">Yes</button>
+        <button class="btn btn--passive" id="noDialogDelete">No (Cancel)</button>
+        <button class="btn btn--danger" id="yesDialogDelete">Yes</button>
       </div>
     </div>
+
 
     <header>
       <h1>Favorite Movies</h1>
