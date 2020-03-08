@@ -26,7 +26,7 @@ for (const data of analyticsData) {
 //********************************** */
 console.log(personalData[1]);
 
-let polje =  ['sport', 'Cooking','slon','macka'];
+let polje =  ['sport', 'Cooking','slon','macka', 'mis'];
 console.log('Pocetno polje= ' + polje);
 
 const hobbies = polje.slice();
@@ -44,7 +44,7 @@ console.log(hobbies);
 hobbies.shift();
 console.log(hobbies);
 
-//
+console.log('************* L 188  splice() radi kopiju *******************')
 let removeElement= hobbies.splice(0,1)
 console.log(removeElement);
 
@@ -57,8 +57,7 @@ console.log('Polje =' + polje);
 let primjer = polje.splice().splice(-2,2);
 console.log(primjer);
 
-
-
+console.log('************* L 189  slice() radi kopiju *******************')
 const testResults = [1, 2, 3, 4, 5, 6, 10.99, 17];
 const storedResultsPoz = testResults.slice(2);
 const storedResultsneg = testResults.slice(-3,-1);
@@ -68,24 +67,21 @@ testResults.push(7);
 console.log('storedResultsPoz= ' +  storedResultsPoz);
 console.log('storedResultsneg= ' + storedResultsneg);
 
-// CONCENATE automatski radi kopiju
+console.log('************* L 190  CONCAT radi kopiju *******************')
 let storedResults_CONCAT = testResults.concat([3.99, 2]);
-console.log(storedResults_CONCAT)
+console.log('Početno polje= ' + testResults)
+console.log('Rzultat = ' + storedResults_CONCAT)
 storedResults_CONCAT = testResults.concat(polje);
 console.log(storedResults_CONCAT)
 
-// pronalazi index vrijednosti...
-console.log(polje.indexOf('slon'))
+console.log('************* L 191  indexOf *******************')
+console.log('polje= '+ polje + '  Koji je index slon? Odpocetak krece  ' + polje.indexOf('slon'))
+console.log('polje= '+ polje + '  Koji je index slon? Odkraja krece  ' + polje.lastIndexOf('slon'))
 
-
+console.log('************* L 192  find, findindex *******************')
 const personData = [{ name: 'Max' }, { name: 'Manuel' },{ name: 'slon' }];
-
-// pronalzi ima li vrijednosti u nizu ako ima TRUE ako ne FALSE
-console.log(testResults.includes(10.99))
-
 // ovo ne prolazi ne moze naci objekt!
 console.log(personData.indexOf({ name: 'Manuel' }));
-
 
 const manuel = personData.find((person, idx, persons) => {
   return person.name === 'Manuel';
@@ -100,4 +96,46 @@ const maxIndex = personData.findIndex((person, idx, persons) => {
   return person.name === 'slon';
 });
 console.log(maxIndex);
+
+console.log('************* L 193  includes *******************')
+console.log(testResults.includes(10.99))
+
+console.log('************* L 194  forEach *******************')
+const poljeSaPodacima = [10.99, 5.99, 3.99, 6.59, -12.3, 17, 8.88];
+const tax = 0.19;
+let poljeA = []; 
+let poljeB = [];
+
+for (const data of poljeSaPodacima) {
+  poljeA.push(data * (1 + tax));
+}
+console.log('pocetno polje =   ' + poljeSaPodacima );
+console.log('Rezultat nakon funkcije sa pocetnim poljem= ' + poljeA); 
+
+poljeSaPodacima.forEach((data, indexKakoHocesNazovi, data1) => {
+  const priceObj = { index: indexKakoHocesNazovi, imePolje: data * (1 + tax) };
+  poljeB.push(priceObj);
+});
+console.log(poljeSaPodacima, poljeB);
+
+console.log('************* L 195  map() (isto kao i forEach, ali krace L194) **********')
+const taxAdjustedPrices = poljeSaPodacima.map((data, xxx, prices) => {
+  const priceObj = { index: xxx, yyy: data * (1 + tax) };
+  return priceObj;
+});
+console.log(poljeSaPodacima, taxAdjustedPrices);
+
+console.log('********** L 196  sort()/reverse() (isto kao i forEach, ali krace L194) **********')
+const sortedPoljeSapodacima = poljeSaPodacima.sort((a,b) => {
+  if (a>b) {
+    return 1;
+  } else if (a === b) {
+    return 0;
+  } else {
+    return -1
+  }
+});
+
+console.log(sortedPoljeSapodacima);
+console.log(sortedPoljeSapodacima.reverse());
 
