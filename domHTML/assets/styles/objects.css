@@ -20,6 +20,7 @@ input {
   font: inherit;
   border: none;
   border-bottom: 2px solid #ccc;
+  /* border-bottom: 2px solid red; */
   color: #494949;
   width: 100%;
   display: block;
@@ -28,7 +29,8 @@ input {
 
 input:focus {
   outline: none;
-  border-color: #ff0062;
+  /* border-color: #ff0062; */
+  border-color: blue;
 }
 
 button {
