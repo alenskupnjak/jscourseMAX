@@ -102,7 +102,7 @@ console.log(testResults.includes(10.99))
 
 
 console.log('************************************************************* L 194  forEach')
-const poljeSaPodacima = [10.99, 5.99, 3.99, 6.59, -12.3, 17, 8.88];
+const poljeSaPodacima = [10.99, 5.99, 3.99, 6.59, -12.3, 17, 8.88, 5.99];
 const poljeString = ['N', 'i', 'z', 'S', 'l', 'o','v', 'a'];
 const tax = 0.19;
 let poljeA = poljeSaPodacima.slice(); 
@@ -160,7 +160,7 @@ console.log('Početna vrijednost= ' + poljeD);
 let filteredArray =poljeD.filter((data, opcija1, opcija2)=>{
   console.log('opcija1=' + opcija1)
   console.log('opcija2= '+ opcija2)
-  return data >6
+  return data > 6
 })
 console.log(poljeD, filteredArray);
 console.log('ili isto rijesenje jednostavnije!!!!');
