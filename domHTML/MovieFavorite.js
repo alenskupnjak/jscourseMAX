@@ -30,7 +30,8 @@ const renderMovies = ( filter='' ) => {
 
   filterMovies.forEach((data) => {
     const movieEl = document.createElement('li');
-    let text = data.info.title + ' - '
+    const { info } = data
+    let text = data.info.title.toUpperCase() + ' - '
     for (const key in data.info) {
       if (key !== 'title') {
         text = text + `${key}: ${data.info[key]}`;
@@ -49,7 +50,9 @@ const addMovieHandler = () => {
   const extraValue = document.getElementById('extra-value').value;
  
   // prolazi kroz vrijednosti i oduzima spaceve ako ih ima
-  if (title.trim() === '' | extraName.trim() ==='' | extraValue.trim() ==='') {
+  if ( // title.trim() === '' 
+    extraName.trim() ==='' 
+  | extraValue.trim() ==='') {
    return;
   };
 
@@ -58,7 +61,10 @@ const addMovieHandler = () => {
       title: title,
       [extraName]: extraName
     },
-    id: Math.random()
+    id: Math.random(),
+    formatirajTitle: function() {
+      return this.info.title.toUpperCase();
+    }
   };
 
   movies.push(newMovie);

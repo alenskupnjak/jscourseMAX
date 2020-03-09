@@ -251,6 +251,13 @@ console.log(copiedPersons)
 persons[1].age = 201;
 console.log('Riješenje kako izraditi kopiju polja objekata', persons, copiedPersons);
 
+// moras prekinuti veza sa poljem hobi!!
+osoba = {ime:'as', hobi:['sport', 'kuhanje']}
+
+// kako treba kopirati i prekinuti sve veze
+let novaOsoba = {...osoba, ime:'mozes definirati ovdje novu vrijednost!',hobi:[...osoba.hobi]};
+
+
 
 console.log('**************************************************************** L 203 *********')
 let nameData = ['Max', 'Schwarz', 'Mr', 30];
