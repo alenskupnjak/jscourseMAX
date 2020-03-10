@@ -12,13 +12,22 @@ class Product {
   }
 }
 
+
 class ShoppingCart {
-  // polje u koje cemo spremati odabrane proizvode
-  items= [];
+  // polje u koje cemo spremati odabrane proizvode za kupnja
+  items = [];
+  get totalAmount(){
+    const sum = this.items.reduce((prevValue, curItem)=>{
+      return prevValue + curItem.price
+    }, 0)
+    return sum;
+  }
 
   addProduct(product) {
     this.items.push(product);
-    this.totalOutput.innerHTML =  `<h2>Total \ ${0}</h2>`
+    console.log(this.items);
+    // toFixed zakruzuje na dvije decimal
+    this.totalOutput.innerHTML =  `<h2>Total \ ${this.totalAmount.toFixed(2)}</h2>`
   }
 
   render() {
@@ -79,9 +88,9 @@ class ProductItem {
 class ProductList {
   // podaci sa kojima radimo
   products = [
-   new Product( 'Javascript','https://cdn.pixabay.com/photo/2015/04/23/17/41/javascript-736400_960_720.png','Jastuk',19.99),
-   new Product( 'Angular','https://seeklogo.com/images/A/angular-icon-logo-9946B9795D-seeklogo.com.png','Veliki tepih',29.99),
-   new Product( 'NodeJS','https://cdn.pixabay.com/photo/2015/04/23/17/41/node-js-736399_960_720.png','Mali tepih',77.77)
+   new Product( 'Javascript','https://cdn.pixabay.com/photo/2015/04/23/17/41/javascript-736400_960_720.png','Jastuk',11.11),
+   new Product( 'Angular','https://seeklogo.com/images/A/angular-icon-logo-9946B9795D-seeklogo.com.png','Veliki tepih',22.22),
+   new Product( 'NodeJS','https://cdn.pixabay.com/photo/2015/04/23/17/41/node-js-736399_960_720.png','Mali tepih',33.33)
   ]
 
   constructor () {}
