@@ -13,9 +13,41 @@ class Product {
 }
 
 
-class ShoppingCart {
+class ElementAtribute {
+  constructor(attrName, attrValue) {
+   this.name = attrName;
+   this.value = attrValue
+  }
+}
+class Component  {
+  constructor(renderHoohId) {
+    this.hook = renderHoohId
+  }
+
+  createRootElement(tag, cssClasses, atributes){
+    const rootElement = document.createElement(tag);
+    if (cssClasses){
+      rootElement.className = cssClasses;
+    }
+    if (atributes && atributes.lenht >0) {
+      for ( const data of atributes){
+        rootElement.setAtributes(data.name, data.value)
+      }
+    }
+    document.getElementById(this.hook).append(rootElement);
+    return rootElement;
+  }
+}
+
+class ShoppingCart extends Component {
   // polje u koje cemo spremati odabrane proizvode za kupnja
   items = [];
+
+  // ako je klasa child a nema konstruktora super se referira na paretn klasu, u ovom slicaju Component
+  constructor (renderHookId) {
+    super(renderHookId); // referira se i prosljeduje vrujednost u parent constructor
+  }
+
   get totalAmount(){
     const sum = this.items.reduce((prevValue, curItem)=>{
       return prevValue + curItem.price
@@ -31,11 +63,12 @@ class ShoppingCart {
   }
 
   render() {
-    // inicira <section></section>
-    const cartEl = document.createElement('section');
-
-    // dodaje class="product-item" u <section>/section> =>  <section class="product-item">/section> 
-    cartEl.className='cart';
+    // nesto jednostavniji pristup
+    const cartEl = this.createRootElement('section', 'cart')
+                          // inicira <section></section>
+                          // const cartEl = document.createElement('section');
+                          // dodaje class="product-item" u <section>/section> =>  <section class="product-item">/section> 
+                          // cartEl.className='cart';
 
     cartEl.innerHTML=`
     <h2>Total \ ${0}</h2>
@@ -125,15 +158,16 @@ class NovaStranica {
     const stranicaHTML = document.getElementById('pocetak-aplikacije');
 
     // iniciram zaglavlje
-    this.cart = new ShoppingCart();
-    const cartEl = this.cart.render();
+    this.cart = new ShoppingCart('pocetak-aplikacije');
+    // const cartEl = this.cart.render();
+    this.cart.render();
 
     // iniciram listu proizvoda
     const productList = new ProductList();
     const productListEl = productList.render();
 
-    // dodaje kreirane elemente na stranicu
-    stranicaHTML.append(cartEl)
+    // // dodaje kreirane elemente na stranicu
+    // stranicaHTML.append(cartEl)
     stranicaHTML.append(productListEl)
   }
 }
