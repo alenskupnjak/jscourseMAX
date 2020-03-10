@@ -15,13 +15,19 @@ class Product {
 class ShoppingCart {
   items= [];
 
+  addProduct(product) {
+    this.items.push(product);
+    this.totalOutput.innerHTML =  `<h2>Total \ ${0}</h2>`
+  }
+
   render() {
     const cartEl = document.createElement('section');
     cartEl.innerHTML=`
     <h2>Total \ ${0}</h2>
     <button> Order Now </button>
     `
-    cartEl.className='chart'
+    cartEl.className='cart';
+    this.totalOutput = cartEl.querySelector('h2');
     return cartEl;
   }
 }
@@ -34,6 +40,7 @@ class ProductItem {
   addToChart () {
     console.log('Adding product to chart')
     console.log( this.product)
+    App.addProductToChart(this.product);
   }
 
   render() {
@@ -52,7 +59,7 @@ class ProductItem {
     `;
     const addChartButton = prodEl.querySelector('button')
     addChartButton.addEventListener('click',this.addToChart.bind(this))
-      return prodEl
+      return prodEl;
     }
 }
 
@@ -88,17 +95,30 @@ class ProductList {
 }
 
 class Shop {
+
   render() {
     const renderHook = document.getElementById('app');
-    const cart = new ShoppingCart();
-    const cartEl = cart.render();
+    this.cart = new ShoppingCart();
+    const cartEl = this.cart.render();
     const productList = new ProductList();
     const productListEl = productList.render();
     renderHook.append(cartEl)
     renderHook.append(productListEl)
   }
 }
+class App {
+  static cart;
 
+  static init() {
+    const shop = new Shop();
+    shop.render();
+    this.cart = shop.cart;
+  }
 
-const shop = new Shop();
-shop.render();
+  static addProductToChart(product) {
+   this.cart.addProduct(product);
+  }
+}
+
+App.init();
+
