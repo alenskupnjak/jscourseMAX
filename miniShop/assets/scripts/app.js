@@ -95,6 +95,7 @@ class ProductList {
 }
 
 class Shop {
+  static cart;
 
   render() {
     const renderHook = document.getElementById('app');
@@ -116,7 +117,7 @@ class App {
   }
 
   static addProductToChart(product) {
-   this.cart.addProduct(product);
+    this.cart.addProduct(product);
   }
 }
 
