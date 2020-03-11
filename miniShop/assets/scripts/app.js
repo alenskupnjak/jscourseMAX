@@ -62,6 +62,13 @@ class ShoppingCart extends Component {
     this.totalOutput.innerHTML =  `<h2>Total \ ${this.totalAmount.toFixed(2)}</h2>`
   }
 
+  // static addProductPokus(product) {
+  //   this.items.push(product);
+  //   console.log(this.items);
+  //   // toFixed zakruzuje na dvije decimal
+  //   this.totalOutput.innerHTML =  `<h2>Total \ ${this.totalAmount.toFixed(2)}</h2>`
+  // }
+
   render() {
     // nesto jednostavniji pristup
     const cartEl = this.createRootElement('section', 'cart')
@@ -91,6 +98,13 @@ class ProductItem {
     // ShoppingCart.addProduct(this.product); ovo ne moze jer nije inicijaliiran
   }
 
+  // addToChartPokus = () => {
+  //   console.log('Ovo ja dodajem')
+  //   console.log(this.product);
+  //   App.addProductToChartPokus(this.product);
+  //   // ShoppingCart.addProduct(this.product); ovo ne moze jer nije inicijaliiran
+  // }
+
   render() {
     // inicira element <li></li>
     const prodEl = document.createElement('li');
@@ -112,7 +126,9 @@ class ProductItem {
     `;
     const addChartButton = prodEl.querySelector('button')
     addChartButton.addEventListener('click',this.addToChart.bind(this))
-    // addChartButton.addEventListener('click',this.addToChart(this.product))
+    
+    // const addChartButtonMoje = document.getElementById('moj')
+    // addChartButtonMoje.addEventListener('click',this.addToChartPokus())
     return prodEl;
   }
 }
@@ -180,6 +196,7 @@ class App {
 
     // ovim inicijaliziram ShoppingCart koji ce mi kasnije trebati kada budem dodavao na listi
     this.stranica = startnaStranica.cart;
+    this.stranicaPokus = startnaStranica.cart;
   }
 
 
@@ -187,6 +204,12 @@ class App {
     console.log(data);
     this.stranica.addProduct(data);
   }
+
+  // static addProductToChartPokus(data) {
+  //   console.log(data);
+  //   // this.stranicaPokus.addProductPokus(data);
+  //   ShoppingCart.addProductPokus(data)
+  // }
 }
 
 
