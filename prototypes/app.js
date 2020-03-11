@@ -17,18 +17,20 @@ class Person extends AgedPerson {
 
   }
 
-  // greet() {
+  // opcija 1 koristiti
+  greet() {
+    console.log(
+      'Hi, I am ' + this.name + ' and I am ' + this.age + ' years old.'
+    );
+  }
+
+  // // opcija 2  izbjegavati ovo rijesenje zauzima vise memorije!!!
+  // greet = () => {
   //   console.log(
-  //     'Hi, I am ' + this.name + ' and I am ' + this.age + ' years old.'
+  //     'Hi, I am ' + this.name + ' and I am ' + this.age + ' greet 2'
   //   );
   // }
 
-  // ovo rijesenje zauzima vise memorije!!!
-  greet = () => {
-    console.log(
-      'Hi, I am ' + this.name + ' and I am ' + this.age + ' greet 2'
-    );
-  }
 }
 
 // *************************************** */
@@ -77,4 +79,9 @@ console.log(p.__proto__ === p2.__proto__);
 console.log(p === p2);
 
 const dugme = document.getElementById('btn');
-dugme.addEventListener('click', p.greet)
+
+// opcija 1
+dugme.addEventListener('click', p.greet.bind(p))
+
+// // opcija 2
+// dugme.addEventListener('click', p.greet)
