@@ -45,13 +45,12 @@ li {
 section {
   margin: 1rem auto;
   width: 40rem;
-  height: 30rem;
   max-width: 90%;
 }
 
 section ul {
   padding: 1rem;
-  max-height: 30rem;
+  max-height: 20rem;
   overflow: scroll;
 }
 

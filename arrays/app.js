@@ -79,17 +79,18 @@ console.log('polje= '+ polje + '  Koji je index slon? Odpocetak krece  ' + polje
 console.log('polje= '+ polje + '  Koji je index slon? Odkraja krece  ' + polje.lastIndexOf('slon'))
 
 console.log('************************************************************* L 192  find, findindex ')
-const personData = [{ name: 'Max' }, { name: 'Manuel' },{ name: 'slon' }];
+const personData = [{ name: 'Max' }, { name: 'Manuel' },{ name: 'slon' },{ name: 'macka' }];
 // ovo ne prolazi ne moze naci objekt!
 console.log(personData.indexOf({ name: 'Manuel' }));
 
-const manuel = personData.find((person, idx, persons) => {
+
+let data = personData.find((person, idx, persons) => {
   return person.name === 'Manuel';
 });
 
-console.log('manuel= ' + manuel);
-manuel.name = 'Anna';
-console.log(manuel, personData);
+console.log(data);
+data.name = 'Anna';
+console.log(data, personData);
 
 // pronalazi index
 const maxIndex = personData.findIndex((person, idx, persons) => {
@@ -158,14 +159,16 @@ console.log(sortedPoljeSapodacima.reverse());
 console.log('****************************************************************** L 197  filter() radi kopiju')
 console.log('Početna vrijednost= ' + poljeD);
 let filteredArray =poljeD.filter((data, opcija1, opcija2)=>{
-  console.log('opcija1=' + opcija1)
-  console.log('opcija2= '+ opcija2)
   return data > 6
 })
+console.log('opcija1 predstavlja index')
+console.log('opcija2= se ne koristi')
+
+
 console.log(poljeD, filteredArray);
 console.log('ili isto rijesenje jednostavnije!!!!');
 filteredArray = poljeD.filter(data => {
-  data > 6
+  return data !== 17
 })
 console.log(poljeD, filteredArray);
 
@@ -331,7 +334,7 @@ mapData.forEach(data=>{
   })
 })
 
-//*********************************zaratak  *********************************************/
+//*********************************zadatak  *********************************************/
 
 const brojke = [1, -22, 100, 4, 5, 6];
 
