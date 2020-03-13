@@ -81,7 +81,7 @@ button:focus {
 button:hover,
 button:active {
   background: #ff2579;
-  border-color: #ff2579;
+  border-color:blue;
   color: white;
 }
 

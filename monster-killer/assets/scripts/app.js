@@ -171,7 +171,7 @@ function endRound() {
   }
 
   if (currentMonsterHealth <= 0 && currentPlayerHealth > 0 ) {
-    alert('You Won!');
+    alert('Pobjedio si!');
     writeToLog(
       LOG_EVENT_GAME_OVER,
       'PLAYER WON',
@@ -180,7 +180,7 @@ function endRound() {
     );
     reset();
   } else if (currentPlayerHealth <=0 && currentMonsterHealth > 0) {
-    alert('You lost');
+    alert('Izgubio si');
     writeToLog(
       LOG_EVENT_GAME_OVER,
       'Moster won',

@@ -12,14 +12,77 @@ class DOMHelper {
   }
 }
 
+class Component {
+  constructor(hostElementId, insertBefore = false) {
+    if (hostElementId) {
+      this.hostElement = document.getElementById(hostElementId);
+    } else {
+      this.hostElement = document.body;
+    }
+    this.insertBefore = insertBefore;
+  }
+
+  detach() {
+    if (this.element) {
+      this.element.remove();
+      // this.element.parentElement.removeChild(this.element);
+    }
+  }
+
+  attach() {
+    this.hostElement.insertAdjacentElement(
+      this.insertBefore ? 'afterbegin' : 'beforeend',
+      this.element
+    );
+  }
+}
+
+class Tooltip extends Component {
+  constructor(closeNotifierFunction) {
+    super();
+    this.closeNotifier = closeNotifierFunction;
+    this.create();
+  }
+
+  closeTooltip = () => {
+    this.detach();
+    this.closeNotifier();
+  };
+
+  create() {
+    const tooltipElement = document.createElement('div');
+    tooltipElement.className = 'card';
+    tooltipElement.textContent = 'DUMMY!';
+    tooltipElement.addEventListener('click', this.closeTooltip);
+    this.element = tooltipElement;
+  }
+}
+
+
 class ProjectItem {
-  // hasActiveTooltip = false;
+  hasActiveTooltip = false;
 
   constructor(id, updateListsFun, type) {
     this.id = id;
     this.updateListsFun = updateListsFun;
-    // this.connectMoreInfoButton();
+    this.connectMoreInfoButton();
     this.connectSwitchButton(type);
+  }
+
+
+  showMoreInfoHandler() {
+    if (this.hasActiveTooltip) {
+      return;
+    }
+    const tooltip = new Tooltip(() => { this.hasActiveTooltip = false; });
+    tooltip.attach();
+    this.hasActiveTooltip = true;
+  }
+
+  connectMoreInfoButton() {
+    const projectItemElement = document.getElementById(this.id);
+    const moreInfoBtn = projectItemElement.querySelector('button:first-of-type');
+    moreInfoBtn.addEventListener('click', this.showMoreInfoHandler);
   }
 
   connectSwitchButton(type) {
@@ -72,6 +135,7 @@ class ProjectList {
 
 class App {
   static init() {
+    
     console.log('App 01')
     const act = new ProjectList('active'); console.log(act);
     console.log('App 02')
@@ -85,68 +149,11 @@ class App {
   }
 }
 
+const xxx = document.querySelectorAll(`#active-projekt li`);
+console.log(xxx)
 App.init();
 
 
 
-// class Tooltip extends Component {
-//   constructor(closeNotifierFunction) {
-//     super();
-//     this.closeNotifier = closeNotifierFunction;
-//     this.create();
-//   }
-
-//   closeTooltip = () => {
-//     this.detach();
-//     this.closeNotifier();
-//   };
-
-//   create() {
-//     const tooltipElement = document.createElement('div');
-//     tooltipElement.className = 'card';
-//     tooltipElement.textContent = 'DUMMY!';
-//     tooltipElement.addEventListener('click', this.closeTooltip);
-//     this.element = tooltipElement;
-//   }
-// }
-
-// class Component {
-//   constructor(hostElementId, insertBefore = false) {
-//     if (hostElementId) {
-//       this.hostElement = document.getElementById(hostElementId);
-//     } else {
-//       this.hostElement = document.body;
-//     }
-//     this.insertBefore = insertBefore;
-//   }
-
-//   detach() {
-//     if (this.element) {
-//       this.element.remove();
-//       // this.element.parentElement.removeChild(this.element);
-//     }
-//   }
-
-//   attach() {
-//     this.hostElement.insertAdjacentElement(
-//       this.insertBefore ? 'afterbegin' : 'beforeend',
-//       this.element
-//     );
-//   }
-// }
 
 
-  // showMoreInfoHandler() {
-  //   if (this.hasActiveTooltip) {
-  //     return;
-  //   }
-  //   const tooltip = new Tooltip(() => { this.hasActiveTooltip = false; });
-  //   tooltip.attach();
-  //   this.hasActiveTooltip = true;
-  // }
-
-  // connectMoreInfoButton() {
-  //   const projectItemElement = document.getElementById(this.id);
-  //   const moreInfoBtn = projectItemElement.querySelector('button:first-of-type');
-  //   moreInfoBtn.addEventListener('click', this.showMoreInfoHandler);
-  // }

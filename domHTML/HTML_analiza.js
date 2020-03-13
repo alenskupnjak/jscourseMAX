@@ -18,6 +18,7 @@ console.log(document.querySelector('li:last-of-type'))
 
 //-------------------------------------------------------------------
 li= document.querySelector('li:last-of-type')
+console.log(li);
 // li= document.querySelector('li')
 
 console.log("document.querySelector('li:last-of-type').parentElement")
