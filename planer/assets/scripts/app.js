@@ -1,28 +1,50 @@
+class DOMHelper {
+  static moveElement(elementId, newDestination) {
+    const element = document.getElementById(elementId)
+    console.log(element)
+    const destinationElement = document.querySelector(newDestination);
+    console.log(destinationElement)
+    destinationElement.append(element);
+  }
+
+  static clearEventListeners (element) {
+    const cloneElement = element.cloneNode(true);
+    element.replaceWith(cloneElement);
+    return cloneElement;
+  }
+} 
 class Tooltip {
 
 }
 
 class ProjectItem {
-  constructor(id, updatedProjectListFunction){
+  constructor(id, updatedProjectListFunction, type){
     this.id = id;
     this.updatedProjectListHandler = updatedProjectListFunction;
     console.log('ProjectItem= '+ id)
-    this.connctSwitchButton();
+    this.connctSwitchButton(type);
     this.connectMoreInfoButton();
+    this.pokus= 'slon';
   }
 
   connectMoreInfoButton() {
 
   }
 
-  connctSwitchButton() {
+  connctSwitchButton(type) {
     const projectItemElement = document.getElementById(this.id)
     console.log(projectItemElement);
     console.log(projectItemElement.querySelector('button:last-of-type'));
     console.log(projectItemElement.querySelector(':first-child'));
-    const switchButton = projectItemElement.querySelector('button:last-of-type');
-    console.log(switchButton);
-    switchButton.addEventListener('click',this.updatedProjectListHandler);
+    let switchButton = projectItemElement.querySelector('button:last-of-type');
+    switchButton = DOMHelper.clearEventListeners(switchButton);
+    switchButton.textContent = type === 'active' ? 'Finish' :'Activate';
+    switchButton.addEventListener('click',this.updatedProjectListHandler.bind(this,this.id,this.pokus));
+  }
+
+  update(updatedProjectListFn, type) {
+    this.updatedProjectListHandler= updatedProjectListFn;
+    this.connctSwitchButton(type);
   }
 
 }
@@ -32,13 +54,14 @@ class ProjectList {
 
   constructor(type) {
     this.type = type
+    this.posta = 'posta'
     const prjItem = document.querySelectorAll(`#${type}-projects li`); console.log(prjItem)
     for (const data of prjItem) {
       console.log(data)
       console.log('localName= '+ data.localName)
       console.log('classList= '+ data.classList)
       console.log('classList= '+ data.textContent)
-      this.projects.push(new ProjectItem(data.id, this.switchProject.bind(this)))
+      this.projects.push(new ProjectItem(data.id, this.switchProject.bind(this), this.posta, this.type))
     }
     console.log(this.projects)
   }
@@ -50,9 +73,11 @@ class ProjectList {
 
   }
 
-  addProject() {
-    console.log(this)
-
+  addProject(project, sto) {
+    console.log(project)
+    this.projects.push(project)
+    DOMHelper.moveElement(project.id,`#${this.type}-projects ul`)
+    project.update(this.switchProject.bind(this), this.type);
   }
 
   switchProject(projectId) {
