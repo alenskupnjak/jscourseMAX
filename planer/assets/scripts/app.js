@@ -14,7 +14,18 @@ class DOMHelper {
   }
 } 
 class Tooltip {
-
+  sakrij() {
+    this.element.remove();
+  }
+  
+  show() {
+    const tooltipElement = document.createElement('div')
+    tooltipElement.className = 'card';
+    tooltipElement.textContent = 'Dummy'
+    document.body.append(tooltipElement);
+    tooltipElement.addEventListener('click',this.sakrij.bind(this))
+    this.element = tooltipElement;
+  }
 }
 
 class ProjectItem {
@@ -27,8 +38,16 @@ class ProjectItem {
     this.pokus= 'slon';
   }
 
-  connectMoreInfoButton() {
+  showMoreInfoHandler() {
+    const tooltip = new Tooltip();
+    tooltip.show();
 
+  }
+
+  connectMoreInfoButton() {
+    const projectItemElement = document.getElementById(this.id);
+    let moreInfoButton = projectItemElement.querySelector('button:first-of-type');
+    moreInfoButton.addEventListener('click',this.showMoreInfoHandler);
   }
 
   connctSwitchButton(type) {
