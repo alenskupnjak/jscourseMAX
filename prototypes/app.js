@@ -85,3 +85,28 @@ dugme.addEventListener('click', p.greet.bind(p))
 
 // // opcija 2
 // dugme.addEventListener('click', p.greet)
+
+
+// Define object bar
+var bar = {
+  x : 'Hi'
+}
+console.log(bar.x);  //Hi
+
+// Assign it to foo
+var foo = bar;
+console.log(foo.x);  //Hi
+
+//But
+foo.x = 'Hello!! Im foo.';
+console.log(foo.x);  //Hello!! Im foo.
+console.log(bar.x);  //Hello!! Im foo.
+
+bar.x = "Nice to meet you foo!!";
+console.log(foo.x);  //Nice to meet you foo!!
+console.log(bar.x);  //Nice to meet you foo!!
+
+
+var obj = { foo: "foo", bar: "bar" };
+
+var clonedObj = Object.assign({}, obj);

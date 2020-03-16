@@ -14,9 +14,10 @@ class DOMHelper {
   }
 } 
 class Tooltip {
-  constructor(funkcija, text){
+  constructor(funkcija, text, hostElementId){
     this.closeNotifier = funkcija
     this.text = text;
+    this.hostElementId = hostElementId;
   }
 
   closeTooltip = () => {
@@ -32,7 +33,25 @@ class Tooltip {
     const tooltipElement = document.createElement('div')
     tooltipElement.className = 'card';
     tooltipElement.textContent = this.text;
-    document.body.append(tooltipElement);
+    this.hostElement= document.getElementById(this.hostElementId);
+    console.log(this.hostElement)
+    console.log(this.hostElement.getBoundingClientRect());
+    const hostElementLeft = this.hostElement.offsetLeft;
+    const hostPosTop = this.hostElement.offsetTop;
+    const hostElHigh = this.hostElement.clientHeight;
+    const parentElementScrolling = this.hostElement.parentElement.scrollTop
+    console.log(parentElementScrolling)
+
+    const x = hostElementLeft + 20;
+    const y = hostPosTop + hostElHigh - parentElementScrolling - 10 ;
+
+    tooltipElement.style.position = 'absolute'
+    tooltipElement.style.left = x + 'px';
+    tooltipElement.style.top = y +'px';
+
+    this.hostElement.insertAdjacentElement('beforeend',tooltipElement)
+
+    // document.body.append(tooltipElement);
     tooltipElement.addEventListener('click',this.closeTooltip)
     this.element = tooltipElement;
   }
@@ -59,7 +78,7 @@ class ProjectItem {
     console.log(projectElement.dataset);
     const tooltip = new Tooltip(() => {
       this.hasActiveToolTip = false
-    }, tooltipText);
+    }, tooltipText, this.id);
     tooltip.show();
     this.hasActiveToolTip = true;
   }
