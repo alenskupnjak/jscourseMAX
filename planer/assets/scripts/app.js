@@ -5,6 +5,10 @@ class DOMHelper {
     const destinationElement = document.querySelector(newDestination);
     console.log(destinationElement)
     destinationElement.append(element);
+    // // // opcija nije podrzana u svim preglednicima, mala animacija....
+    // element.scrollIntoView({behavior:'smooth'});
+    // opcija podrzana u svim preglednicima
+    element.scrollIntoView({behavior:'auto'});
   }
 
   static clearEventListeners (element) {
