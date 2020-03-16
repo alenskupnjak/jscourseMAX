@@ -36,23 +36,24 @@ class Tooltip {
   show() {
     const tooltipElement = document.createElement('div')
     tooltipElement.className = 'card';
-    tooltipElement.textContent = this.text;
+    const tooltipTepplate = document.getElementById('tooltip')
+    const tooltipBody = document.importNode(tooltipTepplate.content, true);
+    tooltipBody.querySelector('p').textContent = this.text
+    tooltipElement.append(tooltipBody);
+
+    // tooltipElement.textContent = this.text;
+
+    // poziconirane komentara
     this.hostElement= document.getElementById(this.hostElementId);
-    console.log(this.hostElement)
-    console.log(this.hostElement.getBoundingClientRect());
     const hostElementLeft = this.hostElement.offsetLeft;
     const hostPosTop = this.hostElement.offsetTop;
     const hostElHigh = this.hostElement.clientHeight;
     const parentElementScrolling = this.hostElement.parentElement.scrollTop
-    console.log(parentElementScrolling)
-
     const x = hostElementLeft + 20;
     const y = hostPosTop + hostElHigh - parentElementScrolling - 10 ;
-
     tooltipElement.style.position = 'absolute'
     tooltipElement.style.left = x + 'px';
     tooltipElement.style.top = y +'px';
-
     this.hostElement.insertAdjacentElement('beforeend',tooltipElement)
 
     // document.body.append(tooltipElement);
@@ -77,12 +78,14 @@ class ProjectItem {
       return;
     }
     const projectElement = document.getElementById(this.id);
+    // vrijednost extraInfo je u data-extra-info
     const tooltipText = projectElement.dataset.extraInfo;
     console.log(tooltipText)
     console.log(projectElement.dataset);
-    const tooltip = new Tooltip(() => {
-      this.hasActiveToolTip = false
-    }, tooltipText, this.id);
+    const tooltip = new Tooltip(
+      () => { this.hasActiveToolTip = false}, 
+      tooltipText, 
+      this.id);
     tooltip.show();
     this.hasActiveToolTip = true;
   }
@@ -162,7 +165,18 @@ class App {
   activeProjectList.setSwitchHandlerFunction(finishedProjectList.addProject.bind(finishedProjectList));
   finishedProjectList.setSwitchHandlerFunction(activeProjectList.addProject.bind(activeProjectList));
 
- }
+  setTimeout(this.startAnalytic,3000)
+
+  document.getElementById('start-analytic-btn').addEventListener('click', this.startAnalytic);
+}
+
+static startAnalytic(){
+  const someScript = document.createElement('script');
+  someScript.src = 'assets/scripts/analitika.js';
+  someScript.defer = true;
+  document.head.append(someScript);
+  
+}
 }
 
 App.init();
