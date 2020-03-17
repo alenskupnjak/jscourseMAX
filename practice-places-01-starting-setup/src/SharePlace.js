@@ -1,3 +1,5 @@
+import { Modal } from './UI/Modal';
+
 class PlaceFinder {
   constructor() {
     const addresForm = document.querySelector('form');
@@ -14,16 +16,24 @@ class PlaceFinder {
       return;
     }
 
-    navigator.geolocation.getCurrentPosition( succes=>{
-      const coordinates = {
-        lat: succes.coords.latitude,
-        lng: succes.coords.longitude
-      };
-      console.log(coordinates);
-      
-    }, error =>{
-      alert('Ne mozemo vas locirati, molim dodajte adresu ručno?')
-    });
+    const modal = new Modal('loading-modal-content','Loading location, please wait' )
+    modal.show();
+
+
+    setTimeout(()=>{
+      navigator.geolocation.getCurrentPosition( succes=> {
+        modal.hide();
+        const coordinates = {
+          lat: succes.coords.latitude,
+          lng: succes.coords.longitude
+        };
+        console.log(coordinates);  
+      }, error =>{
+        modal.hide();
+        alert('Ne mozemo vas locirati, molim dodajte adresu ručno?')
+      });
+    },1000)
+
   
   }
 
