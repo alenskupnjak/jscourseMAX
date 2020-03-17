@@ -37,6 +37,20 @@ function fetxhPosts() {
 fetxhPosts();
 
 
+// isto kao i gore  način
+async function fetxhPostsAsync() {
+  const responseData = await sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts');
+      const listOfPost = responseData;
+      for (const data of listOfPost) {
+        const postEl = document.importNode(postTemplate.content, true)
+        postEl.querySelector('h2').textContent = data.title.toUpperCase();
+        postEl.querySelector('p').textContent = data.body;
+        listElement.append(postEl);
+      }
+}
+
+fetxhPostsAsync()
+
 
 
 
