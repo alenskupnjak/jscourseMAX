@@ -6,7 +6,7 @@ export class Map {
 
 render (coordinates) {
   if (!google) {
-    alert(' Ne mogu usnimoti mapu');
+    alert(' Ne mogu usnimiti mapu');
     return;
   }
   const map = new google.maps.Map(document.getElementById('map'), 

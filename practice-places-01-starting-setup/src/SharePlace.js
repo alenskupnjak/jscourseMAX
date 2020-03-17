@@ -38,8 +38,6 @@ class PlaceFinder {
         modal.hide();
         alert('Ne mozemo vas locirati, molim dodajte adresu ručno?')
       });
-   
-
   
   }
 
