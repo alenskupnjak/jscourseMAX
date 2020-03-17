@@ -33,10 +33,8 @@ function trackUserHandler() {
       positionData = posData; console.log(posData);
       // return 'konj';
       return setTimer(2000);
-    }, err => {
-      console.log(err);
-    })
-    .catch( err => { console.log(err);}) // catch se izvrsava prvi ako se pojavi greska, ispred svih!!!
+    }, err => {console.log(err);})
+    .catch( err => { console.log(err);}) // (err=catch, to je isto!!!) catch se izvrsava prvi ako se pojavi greska, ispred svih!!!
     // bitno je gdje se catch nalazi jer se izvrsavaju then() poslije njega, izvrsava se samo jednom
     // dakle ako zelis uhvatiti gresku iz sljedeceg then, moras dodati novi catch
     .then(data => {
@@ -46,7 +44,7 @@ function trackUserHandler() {
     console.log(data);
     console.log('Timer done!');
   });
-  console.log('Getting position...');
+  console.log('Prvo izvrsavam ovu operaciju, teko onda  promise !!!!!...');
 }
 
 button.addEventListener('click', trackUserHandler);
