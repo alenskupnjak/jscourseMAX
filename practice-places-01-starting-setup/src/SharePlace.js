@@ -10,8 +10,24 @@ class PlaceFinder {
 
     locatedUserBtn.addEventListener('click', this.locateUserHandler.bind(this));
     addresForm.addEventListener('click', this.findAdressHandler.bind(this));
-    // this.sharedBtn.addEventListener
+    this.sharedBtn.addEventListener('click', this.sharedPlaceHndler.bind(this));
 
+  }
+
+
+  sharedPlaceHndler(){
+    const sharedLinkInput = document.getElementById('share-link');
+    if(!navigator.clipboard) {
+      sharedLinkInput.select();
+      return;
+    }
+    navigator.clipboard.writeText(sharedLinkInput.value)
+    .then(()=>{
+      alert('Copied into clipboard');
+    }).catch(err=>{
+      console.log(err);
+      sharedLinkInput.select();
+    });
   }
 
   selectPlace(coordinates,address) {
@@ -21,7 +37,7 @@ class PlaceFinder {
     } else {
       this.map = new Map(coordinates);
     }
-    this.sharedBtn.disable = false;
+    this.sharedBtn.disabled = false;
     const sharedLinkInput = document.getElementById('share-link');
     sharedLinkInput.value = `${location.origin}/my-place?address=${encodeURI(address)}`;
   }
