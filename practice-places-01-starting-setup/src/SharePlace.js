@@ -1,25 +1,29 @@
 import { Modal } from './UI/Modal';
 import { Map } from './UI/Map'
-import { getCoordFromAddress } from './UI/Location'
+import { getCoordFromAddress, getAddresFromCoords } from './UI/Location'
 class PlaceFinder {
   constructor() {
     // const addresForm = document.querySelector('form');
     const addresForm = document.getElementById('pronadi');
-    console.log(addresForm)
     const locatedUserBtn = document.getElementById('locate-btn');
+    this.sharedBtn = document.getElementById('share-btn');
 
     locatedUserBtn.addEventListener('click', this.locateUserHandler.bind(this));
     addresForm.addEventListener('click', this.findAdressHandler.bind(this));
+    // this.sharedBtn.addEventListener
 
   }
 
-  selectPlace(coordinates) {
+  selectPlace(coordinates,address) {
     if (this.map) {
       // ako smo ves posjetili stranicu ne trazimo ju opet
       this.map.render(coordinates);
     } else {
       this.map = new Map(coordinates);
     }
+    this.sharedBtn.disable = false;
+    const sharedLinkInput = document.getElementById('share-link');
+    sharedLinkInput.value = `${location.origin}/my-place?address=${encodeURI(address)}`;
   }
 
   locateUserHandler (){
@@ -31,13 +35,12 @@ class PlaceFinder {
     const modal = new Modal('loading-modal-content','Loading location, please wait');
     modal.show();
 
-      navigator.geolocation.getCurrentPosition( succes=> {
+     navigator.geolocation.getCurrentPosition( 
+      async succes=> {
+        const coordinates = { lat: succes.coords.latitude, lng: succes.coords.longitude };
+        const address = await getAddresFromCoords(coordinates);
         modal.hide();
-        const coordinates = {
-          lat: succes.coords.latitude,
-          lng: succes.coords.longitude
-        };
-       this.selectPlace(coordinates);
+        this.selectPlace(coordinates, address);
       }, error =>{
         modal.hide();
         alert('Ne mozemo vas locirati, molim dodajte adresu ručno?')
@@ -64,7 +67,7 @@ class PlaceFinder {
 
     try {
       const coordinates = await getCoordFromAddress(address);
-      this.selectPlace(coordinates);
+      this.selectPlace(coordinates, address);
     } catch (err) {
 
       // message je ugradena funkcija
