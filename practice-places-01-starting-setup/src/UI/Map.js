@@ -11,7 +11,7 @@ render (coordinates) {
   }
   const map = new google.maps.Map(document.getElementById('map'), 
   { center: coordinates,
-    zoom: 5
+    zoom: 16
   });
 
   new google.maps.Marker({
