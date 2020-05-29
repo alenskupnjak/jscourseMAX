@@ -25,6 +25,8 @@ class Component  {
   }
 
   createRootElement(tag, cssClasses, atributes){
+    console.log(atributes);
+    
     const rootElement = document.createElement(tag);
     if (cssClasses){
       rootElement.className = cssClasses;
@@ -40,7 +42,7 @@ class Component  {
 }
 
 class ShoppingCart extends Component {
-  // polje u koje cemo spremati odabrane proizvode za kupnja
+  // polje u koje cemo spremati odabrane proizvode za kupnju
   items = [];
 
   // ako je klasa child a nema konstruktora super se referira na paretn klasu, u ovom slicaju Component
@@ -213,6 +215,6 @@ class App {
 }
 
 
-// pokrecem aplikaciju
+// Pokrecem aplikaciju
 App.init();
 
