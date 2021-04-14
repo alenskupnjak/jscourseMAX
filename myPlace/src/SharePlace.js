@@ -1,100 +1,97 @@
 import { Modal } from './UI/Modal';
-import { Map } from './UI/Map'
-import { getCoordFromAddress, getAddresFromCoords } from './UI/Location'
+import { Map } from './UI/Map';
+import { getCoordsFromAddress, getAddressFromCoords } from './Utility/Location';
+
 class PlaceFinder {
   constructor() {
-    // const addresForm = document.querySelector('form');
-    const addresForm = document.getElementById('pronadi');
-    const locatedUserBtn = document.getElementById('locate-btn');
-    this.sharedBtn = document.getElementById('share-btn');
+    const addressForm = document.querySelector('form');
+    const locateUserBtn = document.getElementById('locate-btn');
+    this.shareBtn = document.getElementById('share-btn');
 
-    locatedUserBtn.addEventListener('click', this.locateUserHandler.bind(this));
-    addresForm.addEventListener('click', this.findAdressHandler.bind(this));
-    this.sharedBtn.addEventListener('click', this.sharedPlaceHndler.bind(this));
-
+    locateUserBtn.addEventListener('click', this.locateUserHandler.bind(this));
+    this.shareBtn.addEventListener('click', this.sharePlaceHandler);
+    addressForm.addEventListener('submit', this.findAddressHandler.bind(this));
   }
 
-
-  sharedPlaceHndler(){
-    const sharedLinkInput = document.getElementById('share-link');
-    if(!navigator.clipboard) {
-      sharedLinkInput.select();
+  sharePlaceHandler() {
+    const sharedLinkInputElement = document.getElementById('share-link');
+    if (!navigator.clipboard) {
+      sharedLinkInputElement.select();
       return;
     }
-    navigator.clipboard.writeText(sharedLinkInput.value)
-    .then(()=>{
-      alert('Copied into clipboard');
-    }).catch(err=>{
-      console.log(err);
-      sharedLinkInput.select();
-    });
+
+    navigator.clipboard.writeText(sharedLinkInputElement.value)
+      .then(() => {
+        alert('Copied into clipboard!');
+      })
+      .catch(err => {
+        console.log(err);
+        sharedLinkInputElement.select();
+      });
   }
 
-  selectPlace(coordinates,address) {
+  selectPlace(coordinates, address) {
     if (this.map) {
-      // ako smo ves posjetili stranicu ne trazimo ju opet
       this.map.render(coordinates);
     } else {
       this.map = new Map(coordinates);
     }
-    this.sharedBtn.disabled = false;
-    const sharedLinkInput = document.getElementById('share-link');
-    sharedLinkInput.value = `${location.origin}/my-place?address=${encodeURI(address)}`;
+    this.shareBtn.disabled = false;
+    const sharedLinkInputElement = document.getElementById('share-link');
+    sharedLinkInputElement.value = `${location.origin}/my-place?address=${encodeURI(address)}&lat=${coordinates.lat}&lng=${coordinates.lng}`;
   }
 
-  locateUserHandler (){
-    if ( !navigator.geolocation) {
-      alert('Location feature not supported!');
+  locateUserHandler() {
+    if (!navigator.geolocation) {
+      alert(
+        'Location feature is not available in your browser - please use a more modern browser or manually enter an address.'
+      );
       return;
     }
-
-    const modal = new Modal('loading-modal-content','Loading location, please wait');
+    const modal = new Modal(
+      'loading-modal-content',
+      'Loading location - please wait!'
+    );
     modal.show();
-
-     navigator.geolocation.getCurrentPosition( 
-      async succes=> {
-        const coordinates = { lat: succes.coords.latitude, lng: succes.coords.longitude };
-        const address = await getAddresFromCoords(coordinates);
+    navigator.geolocation.getCurrentPosition(
+      async successResult => {
+        const coordinates = {
+          lat: successResult.coords.latitude + Math.random() * 50,
+          lng: successResult.coords.longitude + Math.random() * 50
+        };
+        const address = await getAddressFromCoords(coordinates);
         modal.hide();
         this.selectPlace(coordinates, address);
-      }, error =>{
+      },
+      error => {
         modal.hide();
-        alert('Ne mozemo vas locirati, molim dodajte adresu ručno?')
-      });
-  
+        alert(
+          'Could not locate you unfortunately. Please enter an address manually!'
+        );
+      }
+    );
   }
 
-  async findAdressHandler(event) {
-    console.log(event)
+  async findAddressHandler(event) {
     event.preventDefault();
-    // ocitaj vrijednost unesenu u sucelju  adresa
-    // nije mi radilo!!!!
-    // const address = event.target.querySelector('input').value;
-    const address = document.getElementById('adresa').value;
-
-    console.log(address)
-    // osnovna provjera unesenih podataka
-    if(!address || address.trim().length === 0) {
-      alert('Invalid address entered - please try again')
+    const address = event.target.querySelector('input').value;
+    if (!address || address.trim().length === 0) {
+      alert('Invalid address entered - please try again!');
+      return;
     }
-
-    const modal = new Modal('loading-modal-content','Loading location, please wait');
+    const modal = new Modal(
+      'loading-modal-content',
+      'Loading location - please wait!'
+    );
     modal.show();
-
     try {
-      const coordinates = await getCoordFromAddress(address);
+      const coordinates = await getCoordsFromAddress(address);
       this.selectPlace(coordinates, address);
     } catch (err) {
-
-      // message je ugradena funkcija
       alert(err.message);
     }
     modal.hide();
   }
-
-
 }
 
-
-
-const placeFinder= new PlaceFinder();
+const placeFinder = new PlaceFinder();
